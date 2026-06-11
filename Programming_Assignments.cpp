@@ -1,5 +1,5 @@
-// Week 03 Programming Assignment: Adding selection statements and a menu implemented with switch.
-// 6/4/26
+// Week 04 Programming Assignment: Adding while, for, and do-while loops to the code
+// 6/10/26
 // ITCS 2530 Prof. Koss
 // Aisha Ehsan
 
@@ -40,11 +40,12 @@ int main()
     cout << "How many hours do you crochet each week? ";
     cin >> hoursPerWeek;
 
-    // Input validation using if statement so the input is correct
-    if (hoursPerWeek < 0)
+    // Input validation using a while loop so the input is correct
+    while (hoursPerWeek < 0)
     {
-        cout << "Invalid input. Weekly hours cannot be negative." << endl;
-        hoursPerWeek = 0;
+    cout << "Invalid input. Weekly hours cannot be negative.\n";
+    cout << "Enter hours again: ";
+    cin >> hoursPerWeek;
     }
 
     cout << "What is the average cost of one skein of yarn? $";
@@ -65,6 +66,7 @@ int main()
         cout << "Invalid hook size. Setting hook size to 4." << endl;
         hookSize = 4;
     }    
+
     // calculate monthly crochet hours and also the price of each week's skein to determine the budget
     int monthlyHours = hoursPerWeek * 4;
     double monthlyYarnBudget = yarnCostPerSkein * 4;
@@ -93,18 +95,10 @@ int main()
         myMessage += " Larger hooks are great for faster, chunkier projects.";
     }
 
-    // Week 03 menu
-    cout << "\n========== CROCHET MENU ==========" << endl;
-    cout << "1. Choose a new project based on the difficulty level." << endl;
-    cout << "2. View Crochet Summary based on the questions above." << endl;
-    cout << "3. View My Crochet Message" << endl;
-    cout << "Enter choice: ";
-    cin >> choice;
-
     // Open an output file here and close it at the end
     ofstream reportFile("report.txt");
 
-    // Save report to file
+     // Save report to file
     reportFile << "========== YOUR CROCHET SUMMARY ==========" << endl;
 
     reportFile << left;
@@ -119,6 +113,19 @@ int main()
     reportFile << setw(25) << "Hook Size:" << hookSize << endl;
     reportFile << setw(25) << "My Message:" << myMessage << endl;
     reportFile.close();
+
+    do
+    {
+    // Week 03 menu
+    cout << "\n========== CROCHET MENU ==========" << endl;
+    cout << "1. Choose a new project based on the difficulty level." << endl;
+    cout << "2. View Crochet Summary based on the questions above." << endl;
+    cout << "3. View My Crochet Message" << endl;
+    cout << "4. See What You've Crocheted This Month." << endl;
+    cout << "5. Quit Program." << endl;
+    cout << "Enter choice: ";
+    cin >> choice;
+
 
      // Week 03 switch statement
     switch (choice)
@@ -163,11 +170,35 @@ int main()
             cout << "\n========== MY CROCHET MESSAGE ==========" << endl;
             cout << myMessage << endl;
             break;
+        
+        case 4:
+        {
+        //use a for loop to ask the user how many projects they crocheted and what they crocheted in the month
+            int numProjects; //how many times the loop will run
+            string projectName; //stores each input temporarily
+
+            cout << "\nHow many crochet projects have you completed this month? ";
+            cin >> numProjects;
+            cin.ignore();
+
+            for (int i = 1; i <= numProjects; i++) //i is the counter that tracks the current loop number
+            {
+            cout << "Enter project #" << i << ": ";
+            getline(cin, projectName);
+
+            cout << "Project #" << i << ": " << projectName << endl;
+            }
+            break;    
+        }    
+        case 5:
+            cout << "Thanks for using my Crochet Program!" << endl;
+            break;
         //kept default so it doesn't seem like the program randomly ended    
         default:
             cout << "\nSorry! That menu option is invalid." << endl;
             break;
     }
+    } while (choice != 5);
 
     return 0;
 }
